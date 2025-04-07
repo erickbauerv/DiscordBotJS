@@ -6,6 +6,8 @@ const dotenv = require('dotenv')
 dotenv.config()
 const { TOKEN, CLIENT_ID, GUILD_ID} = process.env
 
+
+// Importação dos comandos do bot
 const fs = require("node:fs")
 const path = require("node:path")
 
@@ -29,15 +31,15 @@ for(const file of commandFiles) {
 
 console.log(client.commands)
 
-// Create a new client instance
-
-
-// When the client is ready, run this code (only once).
-// The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
-// It makes some properties non-nullable.
+// Login do bot
 client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-// Log in to Discord with your client's token
 client.login(TOKEN);
+
+// Listener de interações com o bot
+client.on(Events.InteractionCreate, interaction => {
+	if(!interaction.isChatInputCommand()) return
+	console.log(interaction)
+})
