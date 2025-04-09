@@ -39,7 +39,19 @@ client.once(Events.ClientReady, readyClient => {
 client.login(TOKEN);
 
 // Listener de interações com o bot
-client.on(Events.InteractionCreate, interaction => {
+client.on(Events.InteractionCreate, async interaction => {
 	if(!interaction.isChatInputCommand()) return
-	console.log(interaction)
+
+	const command = interaction.client.commands.get(interaction.commandName)
+	if(!command){
+		console.error("Comando não encontrado")
+	}
+
+	try {
+		await command.execute(interaction)
+		return
+	} catch (error) {
+		console.error(error)
+		await interaction.reply("Houve um erro ao executar esse comando")
+	}
 })
