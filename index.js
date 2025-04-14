@@ -40,6 +40,27 @@ client.login(TOKEN);
 
 // Listener de interações com o bot
 client.on(Events.InteractionCreate, async interaction => {
+	if(interaction.isStringSelectMenu()){
+		const selected = interaction.values[0]
+
+		switch(selected) {
+			case "javascript":
+				await interaction.reply("Documentação do JavaScript: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript")
+				break;
+			case "python":
+				await interaction.reply("Documentação do Python: https://docs.python.org/pt-br/3/")
+				break;
+			case "csharp":
+				await interaction.reply("Documentação do C#: https://learn.microsoft.com/pt-br/dotnet/csharp/")
+				break;
+			case "discordjs":
+				await interaction.reply("Documentação do discord.js: https://discord.js.org/")
+				break;
+			default:
+				break;
+		}
+	}
+
 	if(!interaction.isChatInputCommand()) return
 
 	const command = interaction.client.commands.get(interaction.commandName)
